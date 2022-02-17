@@ -1,4 +1,15 @@
-## 1. Создаем скрипт для создания RAID
+## 1. Работа с репозиторием
+
+**Делаем форк репозитория erlong15/otus-linux  
+Клонируем репозиторий, копируем Vagrantfile в свою рабочую папку**  
+```
+mkdir /home/user/git_repo/otus-linux-dz-2
+git clone git@github.com:lelikred/otus-linux.git
+git clone git@github.com:lelikred/otus-linux-dz-2.git
+cd /home/user/git_repo/otus-linux/
+cp Vagrantfile /home/user/git_repo/otus-linux-dz-2/
+```
+## 2. Создаем скрипт для создания RAID
 
 `vi create-RAID-GPT.sh`  
 ```
@@ -32,7 +43,7 @@ mkdir -p /raid/part{1,2,3,4,5}
 for i in $(seq 1 5); do mount /dev/md0p$i /raid/part$i; done
 ```
 
-## 2. Редактируем Vagrantfile
+## 3. Редактируем Vagrantfile
 
 **В блок MACHINES добавляем конфирурации дополнительных дисков**
 ```
@@ -45,7 +56,7 @@ for i in $(seq 1 5); do mount /dev/md0p$i /raid/part$i; done
 
 `box.vm.provision "shell", path: "create-RAID-GPT.sh"`
 
-## 3. Развернем машину, проверим, что партиции и RAID создались
+## 4. Развернем машину, проверим, что партиции и RAID создались
 
 ```
 mdadm -D /dev/md0
